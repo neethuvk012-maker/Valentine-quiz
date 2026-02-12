@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Create Love Quiz</title>
+<style>
+body {
+  font-family: Arial;
+  text-align: center;
+  padding: 20px;
+}
+input, button {
+  padding: 8px;
+  margin: 5px;
+}
+</style>
+</head>
+<body>
+
+<h2>Create Your Love Quiz 💕</h2>
+
+<input id="question" placeholder="Enter your question"><br>
+<input id="opt1" placeholder="Option 1"><br>
+<input id="opt2" placeholder="Option 2"><br>
+<input id="opt3" placeholder="Option 3"><br>
+<input id="opt4" placeholder="Option 4"><br>
+
+<label>Select Correct Answer:</label><br>
+<select id="correct">
+  <option value="1">Option 1</option>
+  <option value="2">Option 2</option>
+  <option value="3">Option 3</option>
+  <option value="4">Option 4</option>
+</select><br>
+
+<button onclick="generateLink()">Generate Quiz Link</button>
+
+<p id="link"></p>
+
+<script>
+function generateLink() {
+  let q = encodeURIComponent(document.getElementById("question").value);
+  let o1 = encodeURIComponent(document.getElementById("opt1").value);
+  let o2 = encodeURIComponent(document.getElementById("opt2").value);
+  let o3 = encodeURIComponent(document.getElementById("opt3").value);
+  let o4 = encodeURIComponent(document.getElementById("opt4").value);
+  let c = document.getElementById("correct").value;
+
+  let url = window.location.origin + window.location.pathname +
+  "?q=" + q + "&o1=" + o1 + "&o2=" + o2 +
+  "&o3=" + o3 + "&o4=" + o4 + "&c=" + c;
+
+  document.getElementById("link").innerHTML =
+  "<a href='" + url + "' target='_blank'>Click Here to Open Quiz</a>";
+}
+
+let params = new URLSearchParams(window.location.search);
+if (params.get("q")) {
+  document.body.innerHTML =
+  "<h2>" + params.get("q") + "</h2>" +
+  "<button onclick='check(1)'>" + params.get("o1") + "</button><br>" +
+  "<button onclick='check(2)'>" + params.get("o2") + "</button><br>" +
+  "<button onclick='check(3)'>" + params.get("o3") + "</button><br>" +
+  "<button onclick='check(4)'>" + params.get("o4") + "</button><br>" +
+  "<p id='result'></p>";
+
+  window.correctAnswer = params.get("c");
+}
+
+function check(num) {
+  if (num == window.correctAnswer) {
+    document.getElementById("result").innerHTML = "Correct 💖";
+  } else {
+    document.getElementById("result").innerHTML = "Wrong 😑";
+  }
+}
+</script>
+
+</body>
+</html>
